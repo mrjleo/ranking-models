@@ -4,7 +4,7 @@ import nltk
 import torch
 from ranking_utils.model import Ranker
 from ranking_utils.model.data import DataProcessor
-from torch.nn.utils.rnn import pad_sequence
+from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence, pad_sequence
 from torch.optim import Adam
 from torchtext.vocab import Vectors
 from transformers import get_constant_schedule_with_warmup
@@ -120,11 +120,11 @@ class QALSTMRanker(Ranker):
             torch.Tensor: The LSTM outputs.
         """
         input_embed = self.embedding(inputs)
-        input_seqs = torch.nn.utils.rnn.pack_padded_sequence(
+        input_seqs = pack_padded_sequence(
             input_embed, lengths.cpu(), batch_first=True, enforce_sorted=False
         )
         lstm_out, _ = self.lstm(input_seqs)
-        out_seqs, _ = torch.nn.utils.rnn.pad_packed_sequence(lstm_out, batch_first=True)
+        out_seqs, _ = pad_packed_sequence(lstm_out, batch_first=True)
         return out_seqs
 
     def _max_pool(

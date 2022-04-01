@@ -175,8 +175,8 @@ class InputModule(torch.nn.Module):
 
         Returns:
             Tuple[torch.Tensor, torch.Tensor, List[int]]: A tuple containing
-                * the query representations, shape (batch_size, 1, rep_dim)
-                * the fact representations, shape (batch_size, max_facts_len, rep_dim)
+                * the query representations, shape (batch_size, 1, rep_dim),
+                * the fact representations, shape (batch_size, max_facts_len, rep_dim),
                 * the number of facts, shape (batch_size,).
         """
         self.input_gru.flatten_parameters()
