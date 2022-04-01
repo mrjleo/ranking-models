@@ -1,6 +1,6 @@
 model:
   _target_: models.bert_dmn.BERTDMNRanker
-  lr: 0.001
+  lr: 0.00003
   warmup_steps: 1000
   hparams:
     bert_model: bert-base-uncased
