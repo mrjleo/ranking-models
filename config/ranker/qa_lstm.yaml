@@ -1,0 +1,15 @@
+model:
+  _target_: models.qa_lstm.QALSTMRanker
+  embeddings:
+    _target_: torchtext.vocab.vectors.GloVe
+    name: 840B
+    dim: 300
+  lr: 0.001
+  warmup_steps: 1000
+  hparams:
+    hidden_dim: 256
+    dropout: 0.1
+
+data_processor:
+  _target_: models.qa_lstm.QALSTMDataProcessor
+  embeddings: ${ranker.model.embeddings}

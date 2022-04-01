@@ -1,0 +1,27 @@
+defaults:
+  - _self_
+  - ranker: ???
+  - training_data: h5
+
+random_seed: 123
+training_mode: pointwise
+pairwise_loss_margin: 0.2
+test: True
+
+trainer:
+  _target_: pytorch_lightning.Trainer
+  deterministic: True
+  precision: 16
+  strategy: ddp
+  callbacks:
+    - _target_: pytorch_lightning.callbacks.LearningRateMonitor
+    - _target_: pytorch_lightning.callbacks.EarlyStopping
+      monitor: val_RetrievalMAP
+      mode: max
+      patience: 3
+      verbose: True
+    - _target_: pytorch_lightning.callbacks.ModelCheckpoint
+      monitor: val_RetrievalMAP
+      mode: max
+      save_top_k: 1
+      verbose: True

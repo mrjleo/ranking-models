@@ -1,0 +1,5 @@
+_target_: ranking_utils.model.data.h5.H5DataModule
+data_dir: ???
+fold_name: ???
+batch_size: 16
+num_workers: 16

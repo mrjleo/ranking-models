@@ -1,0 +1,3 @@
+_target_: ranking_utils.model.data.h5.H5PredictionDataset
+data_file: ???
+pred_file_trec: ???

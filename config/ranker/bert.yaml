@@ -1,0 +1,13 @@
+model:
+  _target_: models.bert.BertRanker
+  lr: 0.00003
+  warmup_steps: 1000
+  hparams:
+    bert_model: bert-base-uncased
+    dropout: 0.1
+    freeze_bert: False
+
+data_processor:
+  _target_: models.bert.BertDataProcessor
+  bert_model: ${ranker.model.hparams.bert_model}
+  char_limit: 10000
