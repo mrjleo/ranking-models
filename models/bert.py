@@ -6,11 +6,11 @@ from ranking_utils.model import Ranker
 from ranking_utils.model.data import DataProcessor
 from transformers import BertModel, BertTokenizer, get_constant_schedule_with_warmup
 
-BertInput = Tuple[str, str]
-BertBatch = Tuple[torch.LongTensor, torch.LongTensor, torch.LongTensor]
+BERTInput = Tuple[str, str]
+BERTBatch = Tuple[torch.LongTensor, torch.LongTensor, torch.LongTensor]
 
 
-class BertDataProcessor(DataProcessor):
+class BERTDataProcessor(DataProcessor):
     """Data processor for cross-attention BERT rankers."""
 
     def __init__(self, bert_model: str, char_limit: int):
@@ -27,7 +27,7 @@ class BertDataProcessor(DataProcessor):
         # without this, there will be a message for each tokenizer call
         transformers.logging.set_verbosity_error()
 
-    def get_model_input(self, query: str, doc: str) -> BertInput:
+    def get_model_input(self, query: str, doc: str) -> BERTInput:
         # empty queries or documents might cause problems later on
         if len(query.strip()) == 0:
             query = "(empty)"
@@ -37,7 +37,7 @@ class BertDataProcessor(DataProcessor):
         # limit characters to avoid tokenization bottlenecks
         return query[: self.char_limit], doc[: self.char_limit]
 
-    def get_model_batch(self, inputs: Iterable[BertInput]) -> BertBatch:
+    def get_model_batch(self, inputs: Iterable[BERTInput]) -> BERTBatch:
         queries, docs = zip(*inputs)
         inputs = self.tokenizer(queries, docs, padding=True, truncation=True)
         return (
@@ -47,7 +47,7 @@ class BertDataProcessor(DataProcessor):
         )
 
 
-class BertRanker(Ranker):
+class BERTRanker(Ranker):
     """Cross-attention BERT ranker."""
 
     def __init__(
@@ -66,19 +66,18 @@ class BertRanker(Ranker):
         self.save_hyperparameters(hparams)
 
         self.bert = BertModel.from_pretrained(hparams["bert_model"], return_dict=True)
+        for p in self.bert.parameters():
+            p.requires_grad = not hparams["freeze_bert"]
         self.dropout = torch.nn.Dropout(hparams["dropout"])
         self.classification = torch.nn.Linear(
             self.bert.encoder.layer[-1].output.dense.out_features, 1
         )
 
-        for p in self.bert.parameters():
-            p.requires_grad = not hparams["freeze_bert"]
-
-    def forward(self, batch: BertBatch) -> torch.Tensor:
+    def forward(self, batch: BERTBatch) -> torch.Tensor:
         """Compute the relevance scores for a batch.
 
         Args:
-            batch (BertBatch): BERT inputs.
+            batch (BERTBatch): BERT inputs.
 
         Returns:
             torch.Tensor: The output scores, shape (batch_size, 1).
