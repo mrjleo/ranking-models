@@ -17,8 +17,8 @@ class BERTDataProcessor(DataProcessor):
         """Constructor.
 
         Args:
-            bert_model (str, optional): Pre-trained BERT model.
-            char_limit (int, optional): Maximum number of characters per query/document.
+            bert_model (str): Pre-trained BERT model.
+            char_limit (int): Maximum number of characters per query/document.
         """
         super().__init__()
         self.tokenizer = BertTokenizer.from_pretrained(bert_model)
