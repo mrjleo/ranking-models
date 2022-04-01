@@ -1,0 +1,18 @@
+model:
+  _target_: models.dmn.DMNRanker
+  embeddings:
+    _target_: torchtext.vocab.vectors.GloVe
+    name: 840B
+    dim: 300
+  lr: 0.001
+  warmup_steps: 1000
+  hparams:
+    rep_dim: 256
+    attention_dim: 256
+    agru_dim: 256
+    num_episodes: 4
+    dropout: 0.1
+
+data_processor:
+  _target_: models.dmn.DMNDataProcessor
+  embeddings: ${ranker.model.embeddings}
