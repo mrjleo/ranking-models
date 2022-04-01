@@ -1,0 +1,18 @@
+model:
+  _target_: models.bert_dmn.BERTDMNRanker
+  lr: 0.001
+  warmup_steps: 1000
+  hparams:
+    bert_model: bert-base-uncased
+    rep_dim: 256
+    attention_dim: 256
+    agru_dim: 256
+    num_episodes: 4
+    dropout: 0.1
+    lite: False
+    no_cache: False
+
+data_processor:
+  _target_: models.bert_dmn.BERTDMNDataProcessor
+  bert_model: ${ranker.model.hparams.bert_model}
+  char_limit: 10000
