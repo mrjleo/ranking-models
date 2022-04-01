@@ -11,7 +11,7 @@ from ranking_utils import write_trec_eval_file
 
 
 @hydra.main(config_path="config", config_name="prediction")
-def main(config: DictConfig):
+def main(config: DictConfig) -> None:
     dataset = instantiate(
         config.prediction_data, data_processor=instantiate(config.ranker.data_processor)
     )

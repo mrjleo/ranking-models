@@ -18,7 +18,7 @@ QALSTMBatch = Tuple[
 class QALSTMDataProcessor(DataProcessor):
     """Data processor for QA-LSTM rankers."""
 
-    def __init__(self, embeddings: Vectors):
+    def __init__(self, embeddings: Vectors) -> None:
         """Constructor.
 
         Args:
@@ -66,7 +66,7 @@ class QALSTMRanker(Ranker):
         lr: float,
         warmup_steps: int,
         hparams: Dict[str, Any],
-    ):
+    ) -> None:
         """Constructor.
 
         Args:
@@ -216,11 +216,6 @@ class QALSTMRanker(Ranker):
         ).unsqueeze(1)
 
     def configure_optimizers(self) -> Tuple[List[Any], List[Any]]:
-        """Create an AdamW optimizer using constant schedule with warmup.
-
-        Returns:
-            Tuple[List[Any], List[Any]]: The optimizer and scheduler.
-        """
         params_with_grad = filter(lambda p: p.requires_grad, self.parameters())
         opt = Adam(params_with_grad, lr=self.lr)
         sched = get_constant_schedule_with_warmup(opt, self.warmup_steps)

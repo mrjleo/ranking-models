@@ -13,7 +13,7 @@ BERTBatch = Tuple[torch.LongTensor, torch.LongTensor, torch.LongTensor]
 class BERTDataProcessor(DataProcessor):
     """Data processor for cross-attention BERT rankers."""
 
-    def __init__(self, bert_model: str, char_limit: int):
+    def __init__(self, bert_model: str, char_limit: int) -> None:
         """Constructor.
 
         Args:
@@ -50,9 +50,7 @@ class BERTDataProcessor(DataProcessor):
 class BERTRanker(Ranker):
     """Cross-attention BERT ranker."""
 
-    def __init__(
-        self, lr: float, warmup_steps: int, hparams: Dict[str, Any],
-    ):
+    def __init__(self, lr: float, warmup_steps: int, hparams: Dict[str, Any],) -> None:
         """Constructor.
 
         Args:
@@ -86,11 +84,6 @@ class BERTRanker(Ranker):
         return self.classification(self.dropout(cls_out))
 
     def configure_optimizers(self) -> Tuple[List[Any], List[Any]]:
-        """Create an AdamW optimizer using constant schedule with warmup.
-
-        Returns:
-            Tuple[List[Any], List[Any]]: The optimizer and scheduler.
-        """
         opt = torch.optim.AdamW(
             filter(lambda p: p.requires_grad, self.parameters()), lr=self.lr
         )

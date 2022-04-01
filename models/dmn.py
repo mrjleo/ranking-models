@@ -16,7 +16,7 @@ DMNBatch = Tuple[torch.LongTensor, torch.IntTensor, torch.LongTensor, torch.Long
 class DMNDataProcessor(DataProcessor):
     """Data processor for Dynamic Memory Network rankers."""
 
-    def __init__(self, embeddings: Vectors):
+    def __init__(self, embeddings: Vectors) -> None:
         """Constructor.
 
         Args:
@@ -67,7 +67,7 @@ class DMNDataProcessor(DataProcessor):
 class InputModule(torch.nn.Module):
     """This module computes the query and fact representations."""
 
-    def __init__(self, embeddings: Vectors, rep_dim: int, dropout: float):
+    def __init__(self, embeddings: Vectors, rep_dim: int, dropout: float) -> None:
         """Constructor.
 
         Args:
@@ -200,7 +200,7 @@ class InputModule(torch.nn.Module):
 class AttentionGRUCell(torch.nn.Module):
     """Attention GRU cell."""
 
-    def __init__(self, rep_dim: int, agru_dim: int):
+    def __init__(self, rep_dim: int, agru_dim: int) -> None:
         """Constructor.
 
         Args:
@@ -236,7 +236,7 @@ class AttentionGRUCell(torch.nn.Module):
 class AttentionGRU(torch.nn.Module):
     """Attention GRU."""
 
-    def __init__(self, rep_dim: int, agru_dim: int):
+    def __init__(self, rep_dim: int, agru_dim: int) -> None:
         """Constructor.
 
         Args:
@@ -285,7 +285,7 @@ class MemoryModule(torch.nn.Module):
     facts and applies an attention GRU.
     """
 
-    def __init__(self, rep_dim: int, attention_dim: int, agru_dim: int):
+    def __init__(self, rep_dim: int, attention_dim: int, agru_dim: int) -> None:
         """Constructor.
 
         Args:
@@ -376,7 +376,7 @@ class MemoryModule(torch.nn.Module):
 class AnswerModule(torch.nn.Module):
     """Answer module. Outputs relevance scores in [0, 1]."""
 
-    def __init__(self, dropout: float, rep_dim: int):
+    def __init__(self, dropout: float, rep_dim: int) -> None:
         """Constructor.
 
         Args:
@@ -409,7 +409,7 @@ class DMNRanker(Ranker):
         lr: float,
         warmup_steps: int,
         hparams: Dict[str, Any],
-    ):
+    ) -> None:
         """Constructor.
 
         Args:
@@ -447,11 +447,6 @@ class DMNRanker(Ranker):
         return self.answer_module(queries.squeeze(1), m.squeeze(1))
 
     def configure_optimizers(self) -> Tuple[List[Any], List[Any]]:
-        """Create an AdamW optimizer using constant schedule with warmup.
-
-        Returns:
-            Tuple[List[Any], List[Any]]: The optimizer and scheduler.
-        """
         params_with_grad = filter(lambda p: p.requires_grad, self.parameters())
         opt = Adam(params_with_grad, lr=self.lr)
         sched = get_constant_schedule_with_warmup(opt, self.warmup_steps)

@@ -25,7 +25,7 @@ BERTDMNBatch = Tuple[
 class BERTDMNDataProcessor(DataProcessor):
     """Data processor for Dynamic Memory Network rankers using BERT."""
 
-    def __init__(self, bert_model: str, char_limit: int):
+    def __init__(self, bert_model: str, char_limit: int) -> None:
         """Constructor.
 
         Args:
@@ -73,7 +73,7 @@ class InputModule(torch.nn.Module):
     (facts) after applying GRUs (input fusion).
     """
 
-    def __init__(self, bert_dim: int, rep_dim: int, dropout: float):
+    def __init__(self, bert_dim: int, rep_dim: int, dropout: float) -> None:
         """Constructor.
 
         Args:
@@ -166,7 +166,7 @@ class InputModule(torch.nn.Module):
 class AnswerModule(torch.nn.Module):
     """Answer module. Outputs a single relevance score for each input."""
 
-    def __init__(self, dropout: float, bert_dim: int, rep_dim: int):
+    def __init__(self, dropout: float, bert_dim: int, rep_dim: int) -> None:
         """Constructor.
 
         Args:
@@ -207,7 +207,7 @@ class DMN(torch.nn.Module):
         agru_dim: int,
         dropout: float,
         num_episodes: int,
-    ):
+    ) -> None:
         """Constructor.
 
         Args:
@@ -250,9 +250,7 @@ class DMN(torch.nn.Module):
 class BERTDMNRanker(Ranker):
     """Dynamic Memory Network for ranking using BERT."""
 
-    def __init__(
-        self, lr: float, warmup_steps: int, hparams: Dict[str, Any],
-    ):
+    def __init__(self, lr: float, warmup_steps: int, hparams: Dict[str, Any],) -> None:
         """Constructor.
 
         Args:

@@ -9,7 +9,7 @@ from ranking_utils.model import TrainingMode
 
 
 @hydra.main(config_path="config", config_name="training")
-def main(config: DictConfig):
+def main(config: DictConfig) -> None:
     seed_everything(config.random_seed, workers=True)
     model = instantiate(config.ranker.model)
     data_module = instantiate(
