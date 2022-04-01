@@ -1,0 +1,21 @@
+model:
+  _target_: models.select_and_rank.SelectAndRankAttention
+  lr: 0.00003
+  warmup_steps: 1000
+  hparams:
+    lstm_dim: 256
+    attention_dim: 256
+    bert_model: bert-base-uncased
+    dropout: 0.1
+    k: 20
+    temperature: 1.0
+    freeze_ranker: False
+
+
+data_processor:
+  _target_: models.select_and_rank.SRDataProcessor
+  bert_model: ${ranker.model.hparams.bert_model}
+  max_query_tokens: 50
+  max_doc_tokens: 5000
+  max_sentences: 500
+  passage_length: 1
