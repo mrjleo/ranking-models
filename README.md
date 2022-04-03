@@ -20,7 +20,7 @@ We use [PyTorch Lightning](https://pytorchlightning.ai/) for training and evalua
 ```
 python train.py
 ```
-For example, in order to train a __S&R-Linear__ ranker, run the following:
+For example, in order to train an __S&R-Linear__ ranker, run the following:
 ```
 python train.py \
     ranker=select_and_rank_linear \
@@ -43,7 +43,7 @@ Currently, `pointwise` (cross-entropy) and `pairwise` (max-margin) loss function
 Model (hyper)parameters can be overidden like any other argument. They are prefixed by `ranker.model` and `ranker.model.hparams`, resprectively. Check each ranker's config (in `config/ranker`) for available options.
 
 #### Output Files
-The default behovior of Hydra is to create a new directory, `outputs`, in the current working directory. In order to use a custom output directory, override the `hydra.run.dir` argument.
+The default behavior of Hydra is to create a new directory, `outputs`, in the current working directory. In order to use a custom output directory, override the `hydra.run.dir` argument.
 
 #### Testing
 By default, the trained model will be evaluated on the test set after the training finishes. This can be disabled by setting `test=False`.
@@ -67,7 +67,7 @@ You can also use a trained model to re-rank any existing test set or TREC runfil
 ```
 python predict.py
 ```
-Similarly to training, the the default arguments can be found in `config/prediction.yaml`. Make sure to configure the `ranker` (i.e. hyperparameters) to be identical to the trained model. Futher, you must provide a checkpoint (`ckpt_path`) and data source (`prediction_data`).
+The the default arguments can be found in `config/prediction.yaml`. Make sure to configure the `ranker` (i.e. hyperparameters) to be identical to the trained model. Futher, you must provide a checkpoint (`ckpt_path`) and data source (`prediction_data`).
 
 #### Re-Ranking a Test Set
 In order to re-rank a test set (as created by the data pre-processing script), set `prediction_data=h5` and provide `prediction_data.data_file` and `prediction_data.pred_file_h5`. For example:
