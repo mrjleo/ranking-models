@@ -17,6 +17,7 @@ def main(config: DictConfig) -> None:
     )
     trainer = instantiate(config.trainer)
 
+    ids_iter = iter(dataset.ids())
     result = defaultdict(dict)
     for item in trainer.predict(
         model=instantiate(config.ranker.model),
@@ -28,7 +29,8 @@ def main(config: DictConfig) -> None:
         for index, score in zip(
             item["indices"].detach().numpy(), item["scores"].detach().numpy(),
         ):
-            q_id, doc_id = dataset.get_ids(index)
+            i, q_id, doc_id = next(ids_iter)
+            assert index == i
             result[q_id][doc_id] = score
 
     # include the rank in the file name, otherwise multiple processes compete with each other
