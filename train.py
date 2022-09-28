@@ -19,8 +19,10 @@ def main(config: DictConfig) -> None:
     model.training_mode = data_module.training_mode = {
         "pointwise": TrainingMode.POINTWISE,
         "pairwise": TrainingMode.PAIRWISE,
+        "contrastive": TrainingMode.CONTRASTIVE,
     }[config.training_mode]
-    model.pairwise_loss_margin = config.pairwise_loss_margin
+    model.margin = config.margin
+    model.in_batch_negatives = config.in_batch_negatives
 
     trainer = instantiate(config.trainer)
     trainer.fit(model=model, datamodule=data_module)

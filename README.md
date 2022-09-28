@@ -35,12 +35,13 @@ You can further override or add new arguments to other components such as the `p
 * `+trainer.limit_val_batches=1000` to use only 1000 batches of the validation data
 
 #### Training Mode
-Currently, `pointwise` (cross-entropy) and `pairwise` (max-margin) loss functions are supported. Select a training loss by using
-* `training_mode=pointwise` or
-* `training_mode=pairwise`.
+Currently, `pointwise` (cross-entropy), `pairwise` (max-margin) and `contrastive` loss functions are supported. Select a training loss by using
+* `training_mode=pointwise`,
+* `training_mode=pairwise` or
+* `training_mode=contrastive`.
 
 #### Model Parameters
-Model (hyper)parameters can be overidden like any other argument. They are prefixed by `ranker.model` and `ranker.model.hparams`, resprectively. Check each ranker's config (in `config/ranker`) for available options.
+Model (hyper)parameters can be overidden like any other argument. They are prefixed by `ranker.model` and `ranker.model.hparams`, respectively. Check each ranker's config (in `config/ranker`) for available options.
 
 #### Output Files
 The default behavior of Hydra is to create a new directory, `outputs`, in the current working directory. In order to use a custom output directory, override the `hydra.run.dir` argument.
