@@ -6,7 +6,6 @@ defaults:
 random_seed: 123
 training_mode: pointwise
 margin: 0.2
-in_batch_negatives: True
 test: True
 
 trainer:

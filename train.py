@@ -22,7 +22,6 @@ def main(config: DictConfig) -> None:
         "contrastive": TrainingMode.CONTRASTIVE,
     }[config.training_mode]
     model.margin = config.margin
-    model.in_batch_negatives = config.in_batch_negatives
 
     trainer = instantiate(config.trainer)
     trainer.fit(model=model, datamodule=data_module)
