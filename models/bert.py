@@ -13,15 +13,19 @@ BERTBatch = Tuple[torch.LongTensor, torch.LongTensor, torch.LongTensor]
 class BERTDataProcessor(DataProcessor):
     """Data processor for cross-attention BERT rankers."""
 
-    def __init__(self, bert_model: str, char_limit: int) -> None:
+    def __init__(
+        self, bert_model: str, token_limit: int = None, char_limit: int = None
+    ) -> None:
         """Constructor.
 
         Args:
             bert_model (str): Pre-trained BERT model.
-            char_limit (int): Maximum number of characters per query/document.
+            token_limit (int, optional): Maximum number of tokens per input. Defaults to None.
+            char_limit (int, optional): Maximum number of characters per query/document. Defaults to None.
         """
         super().__init__()
         self.tokenizer = BertTokenizer.from_pretrained(bert_model)
+        self.token_limit = token_limit
         self.char_limit = char_limit
 
         # without this, there will be a message for each tokenizer call
@@ -39,7 +43,9 @@ class BERTDataProcessor(DataProcessor):
 
     def get_model_batch(self, inputs: Iterable[BERTInput]) -> BERTBatch:
         queries, docs = zip(*inputs)
-        inputs = self.tokenizer(queries, docs, padding=True, truncation=True)
+        inputs = self.tokenizer(
+            queries, docs, padding=True, truncation=True, max_length=self.token_limit
+        )
         return (
             torch.LongTensor(inputs["input_ids"]),
             torch.LongTensor(inputs["attention_mask"]),
@@ -50,7 +56,12 @@ class BERTDataProcessor(DataProcessor):
 class BERTRanker(Ranker):
     """Cross-attention BERT ranker."""
 
-    def __init__(self, lr: float, warmup_steps: int, hparams: Dict[str, Any],) -> None:
+    def __init__(
+        self,
+        lr: float,
+        warmup_steps: int,
+        hparams: Dict[str, Any],
+    ) -> None:
         """Constructor.
 
         Args:
