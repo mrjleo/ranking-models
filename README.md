@@ -4,7 +4,7 @@ This repository houses the implementations of our ranking models as well as some
 
 - **Select & Rank** [[1]](https://arxiv.org/abs/2106.12460)
 - **BERT-DMN** [[2]](https://arxiv.org/abs/2106.07316)
-- **BERT** [[3]](https://dl.acm.org/doi/10.5555/3295222.3295349) [[4]](https://arxiv.org/abs/1901.04085)
+- **BERT** [[3]](https://aclanthology.org/N19-1423/) [[4]](https://arxiv.org/abs/1901.04085)
 - **QA-LSTM** [[5]](https://aclanthology.org/P16-1044/)
 - **DMN** [[6]](http://proceedings.mlr.press/v48/kumar16.pdf) [[7]](http://proceedings.mlr.press/v48/xiong16.pdf)
 
