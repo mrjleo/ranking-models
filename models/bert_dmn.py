@@ -1,13 +1,8 @@
-from typing import Any, Dict, Iterable, List, Tuple, Union
+from typing import Any, Dict, Iterable, List, Tuple
 
 import nltk
 import torch
-from ranking_utils.model import (
-    PairwiseTrainingBatch,
-    PointwiseTrainingBatch,
-    Ranker,
-    TrainingMode,
-)
+from ranking_utils.model import Ranker, TrainingBatch, TrainingMode
 from ranking_utils.model.data import DataProcessor
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence, pad_sequence
 from torch.optim import AdamW
@@ -416,7 +411,7 @@ class BERTDMNRanker(Ranker):
 
     def training_step(
         self,
-        batch: Union[PointwiseTrainingBatch, PairwiseTrainingBatch],
+        batch: TrainingBatch,
         batch_idx: int,
     ) -> torch.Tensor:
         if self.training_mode == TrainingMode.POINTWISE:
@@ -428,9 +423,11 @@ class BERTDMNRanker(Ranker):
             pos_outputs = torch.sigmoid(self(pos_inputs, indices, self.pos_cache))
             neg_outputs = torch.sigmoid(self(neg_inputs, indices, self.neg_cache))
             loss = torch.mean(
-                torch.clamp(
-                    self.pairwise_loss_margin - pos_outputs + neg_outputs, min=0
-                )
+                torch.clamp(self.margin - pos_outputs + neg_outputs, min=0)
+            )
+        else:
+            raise RuntimeError(
+                "BERT-DMN only supports pointwise and pairwise training."
             )
 
         self.log("train_loss", loss)
