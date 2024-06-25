@@ -25,3 +25,7 @@ trainer:
       mode: max
       save_top_k: 1
       verbose: True
+
+hydra:
+  job:
+    chdir: True

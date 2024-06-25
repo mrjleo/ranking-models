@@ -11,7 +11,7 @@ from ranking_utils.model import TrainingMode
 torchtext.disable_torchtext_deprecation_warning()
 
 
-@hydra.main(config_path="config", config_name="training")
+@hydra.main(config_path="config", config_name="training", version_base="1.3")
 def main(config: DictConfig) -> None:
     seed_everything(config.random_seed, workers=True)
     model = instantiate(config.ranker.model)

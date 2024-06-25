@@ -17,3 +17,7 @@ trainer:
   deterministic: True
   precision: 16
   strategy: dp
+
+hydra:
+  job:
+    chdir: True

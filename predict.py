@@ -13,7 +13,7 @@ from ranking_utils import write_trec_eval_file
 torchtext.disable_torchtext_deprecation_warning()
 
 
-@hydra.main(config_path="config", config_name="prediction")
+@hydra.main(config_path="config", config_name="prediction", version_base="1.3")
 def main(config: DictConfig) -> None:
     dataset = instantiate(
         config.prediction_data, data_processor=instantiate(config.ranker.data_processor)
