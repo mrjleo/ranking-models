@@ -2,10 +2,13 @@
 
 
 import hydra
+import torchtext
 from hydra.utils import instantiate
 from omegaconf import DictConfig
 from pytorch_lightning import seed_everything
 from ranking_utils.model import TrainingMode
+
+torchtext.disable_torchtext_deprecation_warning()
 
 
 @hydra.main(config_path="config", config_name="training")

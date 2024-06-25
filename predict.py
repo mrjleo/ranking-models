@@ -5,9 +5,12 @@ from collections import defaultdict
 from pathlib import Path
 
 import hydra
+import torchtext
 from hydra.utils import instantiate
 from omegaconf import DictConfig
 from ranking_utils import write_trec_eval_file
+
+torchtext.disable_torchtext_deprecation_warning()
 
 
 @hydra.main(config_path="config", config_name="prediction")
@@ -27,7 +30,8 @@ def main(config: DictConfig) -> None:
         ckpt_path=config.ckpt_path,
     ):
         for index, score in zip(
-            item["indices"].detach().numpy(), item["scores"].detach().numpy(),
+            item["indices"].detach().numpy(),
+            item["scores"].detach().numpy(),
         ):
             i, q_id, doc_id = next(ids_iter)
             assert index == i
