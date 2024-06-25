@@ -1,7 +1,6 @@
 from typing import Any, Dict, Iterable, List, Tuple
 
 import torch
-import transformers
 from ranking_utils.model import Ranker
 from ranking_utils.model.data import DataProcessor
 from transformers import BertModel, BertTokenizer, get_constant_schedule_with_warmup
@@ -27,9 +26,6 @@ class BERTDataProcessor(DataProcessor):
         self.tokenizer = BertTokenizer.from_pretrained(bert_model)
         self.token_limit = token_limit
         self.char_limit = char_limit
-
-        # without this, there will be a message for each tokenizer call
-        transformers.logging.set_verbosity_error()
 
     def get_model_input(self, query: str, doc: str) -> BERTInput:
         # empty queries or documents might cause problems later on

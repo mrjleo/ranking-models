@@ -2,7 +2,6 @@ from typing import Any, Dict, Iterable, List, Tuple, Union
 
 import nltk
 import torch
-import transformers
 from ranking_utils.model import (
     PairwiseTrainingBatch,
     PointwiseTrainingBatch,
@@ -35,9 +34,6 @@ class BERTDMNDataProcessor(DataProcessor):
         super().__init__()
         self.tokenizer = BertTokenizer.from_pretrained(bert_model)
         self.char_limit = char_limit
-
-        # without this, there will be a message for each tokenizer call
-        transformers.logging.set_verbosity_error()
 
     def get_model_input(self, query: str, doc: str) -> BERTDMNInput:
         # empty queries or documents might cause problems later on
@@ -250,7 +246,12 @@ class DMN(torch.nn.Module):
 class BERTDMNRanker(Ranker):
     """Dynamic Memory Network for ranking using BERT."""
 
-    def __init__(self, lr: float, warmup_steps: int, hparams: Dict[str, Any],) -> None:
+    def __init__(
+        self,
+        lr: float,
+        warmup_steps: int,
+        hparams: Dict[str, Any],
+    ) -> None:
         """Constructor.
 
         Args:

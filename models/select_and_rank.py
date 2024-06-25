@@ -3,7 +3,6 @@ from typing import Any, Dict, Iterable, List, Tuple
 
 import nltk
 import torch
-import transformers
 from ranking_utils.model import Ranker
 from ranking_utils.model.data import DataProcessor
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence, pad_sequence
@@ -46,9 +45,6 @@ class SRDataProcessor(DataProcessor):
         self.max_doc_tokens = max_doc_tokens
         self.max_sentences = max_sentences
         self.passage_length = passage_length
-
-        # without this, there will be a message for each tokenizer call
-        transformers.logging.set_verbosity_error()
 
     def get_model_input(self, query: str, doc: str) -> SRInput:
         # empty queries or documents might cause problems later on
@@ -717,7 +713,9 @@ class SelectAndRankAttention(SRBase):
         """
         super().__init__(lr, warmup_steps, hparams)
         self.ranker = BERTRanker(
-            hparams["bert_model"], hparams["dropout"], hparams["freeze_ranker"],
+            hparams["bert_model"],
+            hparams["dropout"],
+            hparams["freeze_ranker"],
         )
 
         # we re-use the embedding of the ranker so the selector has the same vocabulary
@@ -749,7 +747,9 @@ class SelectAndRankLinear(SRBase):
         """
         super().__init__(lr, warmup_steps, hparams)
         self.ranker = BERTRanker(
-            hparams["bert_model"], hparams["dropout"], hparams["freeze_ranker"],
+            hparams["bert_model"],
+            hparams["dropout"],
+            hparams["freeze_ranker"],
         )
 
         # we re-use the embedding of the ranker so the selector has the same vocabulary
