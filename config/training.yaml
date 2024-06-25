@@ -6,7 +6,7 @@ defaults:
 random_seed: 123
 training_mode: pointwise
 margin: 0.2
-test: True
+test: False
 
 trainer:
   _target_: pytorch_lightning.Trainer
