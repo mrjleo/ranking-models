@@ -421,7 +421,7 @@ class LinearSelector(torch.nn.Module):
 
 class BERTRanker(torch.nn.Module):
     """A simple BERT ranker that uses the CLS output as a score. The inputs are constructed using an approximated
-    k-hot sample, i.e. only k sentences are considered. The correspondign inputs are multiplied with their weights.
+    k-hot sample, i.e. only k sentences are considered. The corresponding inputs are multiplied with their weights.
     """
 
     def __init__(self, bert_model: str, dropout: float, freeze: bool = False) -> None:
