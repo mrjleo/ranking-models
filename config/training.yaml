@@ -11,7 +11,8 @@ test: False
 trainer:
   _target_: pytorch_lightning.Trainer
   deterministic: warn
-  strategy: ddp
+  strategy: auto
+  max_epochs: 50
   callbacks:
     - _target_: pytorch_lightning.callbacks.LearningRateMonitor
     - _target_: pytorch_lightning.callbacks.EarlyStopping
