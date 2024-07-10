@@ -17,7 +17,7 @@ class DMNDataProcessor(DataProcessor):
     """Data processor for Dynamic Memory Network rankers."""
 
     def __init__(self, embeddings: Vectors) -> None:
-        """Constructor.
+        """Instantiate a data processor for DMN rankers.
 
         Args:
             embeddings (Vectors): Pre-trained embedding vectors (torchtext).
@@ -68,7 +68,7 @@ class InputModule(torch.nn.Module):
     """This module computes the query and fact representations."""
 
     def __init__(self, embeddings: Vectors, rep_dim: int, dropout: float) -> None:
-        """Constructor.
+        """Instantiate a DMN input module.
 
         Args:
             embeddings (Vectors): Pre-trained embedding vectors (torchtext).
@@ -201,7 +201,7 @@ class AttentionGRUCell(torch.nn.Module):
     """Attention GRU cell."""
 
     def __init__(self, rep_dim: int, agru_dim: int) -> None:
-        """Constructor.
+        """Instantiate an attention GRU cell.
 
         Args:
             rep_dim (int): Input (fact) dimension.
@@ -237,7 +237,7 @@ class AttentionGRU(torch.nn.Module):
     """Attention GRU."""
 
     def __init__(self, rep_dim: int, agru_dim: int) -> None:
-        """Constructor.
+        """Instantiate an attention GRU.
 
         Args:
             rep_dim (int): Input (fact) dimension.
@@ -286,7 +286,7 @@ class MemoryModule(torch.nn.Module):
     """
 
     def __init__(self, rep_dim: int, attention_dim: int, agru_dim: int) -> None:
-        """Constructor.
+        """Instantiate a DMN memory module.
 
         Args:
             rep_dim (int): The dimension of the query and fact representations and the memory.
@@ -374,10 +374,10 @@ class MemoryModule(torch.nn.Module):
 
 
 class AnswerModule(torch.nn.Module):
-    """Answer module. Outputs relevance scores in [0, 1]."""
+    """Answer module. Outputs relevance scores in `[0, 1]`."""
 
     def __init__(self, dropout: float, rep_dim: int) -> None:
-        """Constructor.
+        """Instantiate a DMN answer module.
 
         Args:
             dropout (float): Dropout value.
@@ -410,7 +410,7 @@ class DMNRanker(Ranker):
         warmup_steps: int,
         hparams: Dict[str, Any],
     ) -> None:
-        """Constructor.
+        """Instantiate a DMN ranker.
 
         Args:
             embeddings (Vectors): Pre-trained embedding vectors (torchtext).

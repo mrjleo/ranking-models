@@ -30,7 +30,7 @@ class SRDataProcessor(DataProcessor):
         max_sentences: int,
         passage_length: int,
     ) -> None:
-        """Constructor.
+        """Instantiate a data processor for Select & Rank rankers.
 
         Args:
             bert_model (str): Pre-trained BERT model.
@@ -113,7 +113,7 @@ class AttentionSelector(torch.nn.Module):
         attention_dim: int,
         dropout: float,
     ) -> None:
-        """Constructor.
+        """Instantiate an attention-based LSTM selector.
 
         Args:
             embedding (Embedding): Embedding for query and document tokens.
@@ -315,7 +315,7 @@ class LinearSelector(torch.nn.Module):
         hidden_dim: int,
         dropout: float,
     ) -> None:
-        """Constructor.
+        """Instantiate a linear selector.
 
         Args:
             embedding (Embedding): Embedding for query and document tokens.
@@ -425,7 +425,7 @@ class BERTRanker(torch.nn.Module):
     """
 
     def __init__(self, bert_model: str, dropout: float, freeze: bool = False) -> None:
-        """Constructor.
+        """Instantiate a BERT ranker (Select & Rank).
 
         Args:
             bert_model (str): Pre-trained BERT model.
@@ -590,7 +590,7 @@ class SRBase(Ranker, abc.ABC):
     """
 
     def __init__(self, lr: int, warmup_steps: int, hparams: Dict[str, Any]) -> None:
-        """Constructor.
+        """Instantiate a Select & Rank ranker.
 
         Args:
             lr (float): Learning rate.
@@ -704,7 +704,7 @@ class SelectAndRankAttention(SRBase):
     """Select & Rank model that uses an LSTM selector with attention and a BERT ranker."""
 
     def __init__(self, lr: int, warmup_steps: int, hparams: Dict[str, Any]) -> None:
-        """Constructor.
+        """Instantiate a Select & Rank ranker with an attention-based LSTM selector and a BERT ranker.
 
         Args:
             lr (float): Learning rate.
@@ -738,7 +738,7 @@ class SelectAndRankLinear(SRBase):
     """Select & Rank model with a linear selector and BERT ranker."""
 
     def __init__(self, lr: int, warmup_steps: int, hparams: Dict[str, Any]) -> None:
-        """Constructor.
+        """Instantiate a Select & Rank ranker with a linear selector and a BERT ranker.
 
         Args:
             lr (float): Learning rate.

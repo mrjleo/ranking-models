@@ -15,7 +15,7 @@ class BERTDataProcessor(DataProcessor):
     def __init__(
         self, bert_model: str, token_limit: int = None, char_limit: int = None
     ) -> None:
-        """Constructor.
+        """Instantiate a data processor for cross-attention BERT rankers.
 
         Args:
             bert_model (str): Pre-trained BERT model.
@@ -58,7 +58,7 @@ class BERTRanker(Ranker):
         warmup_steps: int,
         hparams: Dict[str, Any],
     ) -> None:
-        """Constructor.
+        """Instantiate a cross-attention BERT ranker.
 
         Args:
             lr (float): Learning rate.

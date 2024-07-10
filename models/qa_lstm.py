@@ -19,7 +19,7 @@ class QALSTMDataProcessor(DataProcessor):
     """Data processor for QA-LSTM rankers."""
 
     def __init__(self, embeddings: Vectors) -> None:
-        """Constructor.
+        """Instantiate a data processor for QA-LSTM rankers.
 
         Args:
             embeddings (Vectors): Pre-trained embedding vectors (torchtext).
@@ -67,7 +67,7 @@ class QALSTMRanker(Ranker):
         warmup_steps: int,
         hparams: Dict[str, Any],
     ) -> None:
-        """Constructor.
+        """Instantiate a QA-LSTM ranker.
 
         Args:
             embeddings (Vectors): Pre-trained embedding vectors (torchtext).

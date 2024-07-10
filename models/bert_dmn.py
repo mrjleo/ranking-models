@@ -20,7 +20,7 @@ class BERTDMNDataProcessor(DataProcessor):
     """Data processor for Dynamic Memory Network rankers using BERT."""
 
     def __init__(self, bert_model: str, char_limit: int) -> None:
-        """Constructor.
+        """Instantiate a BERT-DMN data processor.
 
         Args:
             bert_model (str): Pre-trained BERT model.
@@ -65,7 +65,7 @@ class InputModule(torch.nn.Module):
     """
 
     def __init__(self, bert_dim: int, rep_dim: int, dropout: float) -> None:
-        """Constructor.
+        """Instantiate a BERT-DMN input module.
 
         Args:
             bert_dim (int): Number of hidden BERT units.
@@ -158,7 +158,7 @@ class AnswerModule(torch.nn.Module):
     """Answer module. Outputs a single relevance score for each input."""
 
     def __init__(self, dropout: float, bert_dim: int, rep_dim: int) -> None:
-        """Constructor.
+        """Instantiate a BERT-DMN answer module.
 
         Args:
             dropout (float): Dropout value.
@@ -199,7 +199,7 @@ class DMN(torch.nn.Module):
         dropout: float,
         num_episodes: int,
     ) -> None:
-        """Constructor.
+        """Instantiate a DMN module for BERT-DMN.
 
         Args:
             bert_dim (int): Number of hidden BERT units.
@@ -247,7 +247,7 @@ class BERTDMNRanker(Ranker):
         warmup_steps: int,
         hparams: Dict[str, Any],
     ) -> None:
-        """Constructor.
+        """Instantiate a BERT-DMN ranker.
 
         Args:
             lr (float): Learning rate.
